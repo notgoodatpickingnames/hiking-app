@@ -57,9 +57,7 @@ export class MapAreaComponent extends React.Component {
 
     render() {
         return (
-            <div>
-                <div ref={el => this.mapContainer = el} className="map"/>
-            </div>
+            <div ref={el => this.mapContainer = el} className="map"/>
         )
     }
 }

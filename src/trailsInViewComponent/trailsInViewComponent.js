@@ -1,10 +1,10 @@
-import './hikingTrailListComponent.css';
+import './trailsInViewComponent.css';
 
 import React from 'react';
 import { connect } from "react-redux";
 import { TrailRepository } from './trailRepository';
 
-export class HikingTrailListComponent extends React.Component {
+export class TrailsInViewComponent extends React.Component {
     trailRepository = new TrailRepository();
 
     componentDidMount() {
@@ -28,4 +28,4 @@ export class HikingTrailListComponent extends React.Component {
 
 const mapStateToProps = (state) => ({mapState: state.mapReducer});
 
-export default connect(mapStateToProps, null)(HikingTrailListComponent);
+export default connect(mapStateToProps, null)(TrailsInViewComponent);

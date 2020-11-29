@@ -4,14 +4,32 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row:first-child {
+    height: 50vh;
+}
+
 .map-container {
-    position: absolute;
-    width: 50%;
-    height: 50%;
+    width: 100%;
+}
+
+.trails-in-view-container {
+    width: 100%;
+}
+
+.recent-trails-container {
+    width: 100%;
+}
+
+.trail-detail-container {
+    width: 100%;
 }
