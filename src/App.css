@@ -19,15 +19,15 @@
 }
 
 .map-container {
-    width: 100%;
+    width: 50%;
 }
 
 .trails-in-view-container {
-    width: 100%;
+    width: 30%;
 }
 
 .recent-trails-container {
-    width: 100%;
+    width: 30%;
 }
 
 .trail-detail-container {
