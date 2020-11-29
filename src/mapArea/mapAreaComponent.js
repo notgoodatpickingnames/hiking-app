@@ -8,6 +8,8 @@ import { mapStateChange } from '../actions/mapStateChange';
 import { connect } from "react-redux";
 
 export class MapAreaComponent extends React.Component {
+    mapStyle = 'mapbox://styles/mapbox/streets-v11';
+
     constructor(props) {
         super(props);
 
@@ -28,7 +30,7 @@ export class MapAreaComponent extends React.Component {
     initialiseMap() {
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/mapbox/streets-v11',
+            style: this.mapStyle,
             center: [this.state.mapCenter.latitude, this.state.mapCenter.longitude],
             zoom: this.state.zoom,
         });
