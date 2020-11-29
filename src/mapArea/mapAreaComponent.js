@@ -14,8 +14,8 @@ export class MapAreaComponent extends React.Component {
         super(props);
 
         this.state = {
-            mapCenter: new Coordinate(-106.9407, 39.0985), // TODO - replace with users location by default;
-            zoom: 20
+            mapCenter: new Coordinate(41.58138769037615, -93.68189502713614), // TODO - replace with users location by default;
+            zoom: 15
         };
     }
 
@@ -24,14 +24,13 @@ export class MapAreaComponent extends React.Component {
     }
 
     componentDidUpdate(previousProps) {
-        console.log('update', previousProps, this.props)
     }
 
     initialiseMap() {
         const map = new mapboxgl.Map({
             container: this.mapContainer,
             style: this.mapStyle,
-            center: [this.state.mapCenter.latitude, this.state.mapCenter.longitude],
+            center: [this.state.mapCenter.longitude, this.state.mapCenter.latitude],
             zoom: this.state.zoom,
         });
 

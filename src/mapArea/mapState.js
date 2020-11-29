@@ -1,5 +1,5 @@
-import calculateDistanceBetweenCoordinates from './calculateDistanceBetweenCoordinates';
-import convertMetersToMiles from './convertMetersToMiles';
+import calculateDistanceBetweenCoordinates from '../core/calculateDistanceBetweenCoordinates';
+import convertMetersToMiles from '../core/convertMetersToMiles';
 import { Coordinate } from './coordinate';
 
 export class MapState {
@@ -17,13 +17,10 @@ export class MapState {
     }
 
     setViewRadius() {
-        const distanceFromNorthEastBoundsToCenterInMeters = calculateDistanceBetweenCoordinates(this.northEastBounds.latitude, this.northEastBounds.longitude, this.center.latitude, this.center.longitude);
-        const distanceFromSouthWestBoundsToCenterInMeters = calculateDistanceBetweenCoordinates(this.southWestBounds.latitude, this.southWestBounds.longitude, this.center.latitude, this.center.longitude);
+        const distanceFromNorthEastBoundsToCenter = calculateDistanceBetweenCoordinates(this.northEastBounds.latitude, this.northEastBounds.longitude, this.center.latitude, this.center.longitude);
+        const distanceFromSouthWestBoundsToCenter = calculateDistanceBetweenCoordinates(this.southWestBounds.latitude, this.southWestBounds.longitude, this.center.latitude, this.center.longitude);
 
-        const distanceFromNorthEastBoundsToCenterInMiles = convertMetersToMiles(distanceFromNorthEastBoundsToCenterInMeters);
-        const distanceFromSouthWestBoundsToCenterInMiles = convertMetersToMiles(distanceFromSouthWestBoundsToCenterInMeters);
-
-        this.viewRadiusInMiles = (distanceFromNorthEastBoundsToCenterInMiles >= distanceFromSouthWestBoundsToCenterInMiles) ? distanceFromNorthEastBoundsToCenterInMiles : distanceFromSouthWestBoundsToCenterInMiles;
+        this.viewRadiusInMiles = (distanceFromNorthEastBoundsToCenter >= distanceFromSouthWestBoundsToCenter) ? distanceFromNorthEastBoundsToCenter : distanceFromSouthWestBoundsToCenter;
     }
 
     static empty() {
