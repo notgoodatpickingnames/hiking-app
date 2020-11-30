@@ -1,0 +1,15 @@
+
+
+.card {
+    height: 100%;
+    padding: 12px;
+}
+
+.header {
+    height: 80px;
+}
+
+.trails {
+    height: calc(100% - 80px);
+    overflow: auto;
+}

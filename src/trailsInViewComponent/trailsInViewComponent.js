@@ -6,14 +6,13 @@ import { TrailRepository } from './trailRepository';
 import { TrailsInView } from './trailsInView';
 import calculateDistanceBetweenCoordinates from '../core/calculateDistanceBetweenCoordinates';
 import { trailsInViewStateChange } from '../actions/trailsInViewStateChange';
-import { Coordinate } from '../mapArea/coordinate';
 
 export class TrailsInViewComponent extends React.Component {
     trailRepository = new TrailRepository();
-    trails;
+    trails = [];
     trailsInView = new TrailsInView([], undefined);
     epicenterOfTrails;
-    distanceMapMustMoveFromEpicenterToTriggerTrailRefresh = 100;
+    distanceMapMustMoveFromEpicenterToTriggerTrailRefresh = 150;
 
     componentDidUpdate(previousProps) {
         if (this.epicenterOfTrails === undefined) {
@@ -46,7 +45,8 @@ export class TrailsInViewComponent extends React.Component {
     retrieveTrailsThenSetTrailsInView() {
         this.trailRepository.list(this.epicenterOfTrails.latitude, this.epicenterOfTrails.longitude, 100, 500)
         .then(trails => {
-            this.trails = trails;
+            const newTrails = trails.filter(trail => this.trails.find(t => t.id === trail.id) === undefined);
+            this.trails = this.trails.concat(newTrails);
             this.setTrailsInView();
         });
     }
@@ -62,11 +62,12 @@ export class TrailsInViewComponent extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>
+            <div className="card">
+                <div class="header">
+                    Trails In View <br/>
                     distFromOldCenter - {calculateDistanceBetweenCoordinates(this.props.mapState.center.latitude, this.props.mapState.center.longitude, this.epicenterOfTrails?.latitude, this.epicenterOfTrails?.longitude)}
                 </div>
-                <div>
+                <div class="trails">
                     {
                         this.trailsInView.trailsInView?.map(trail => <div key={`trail_in_view_${trail.id}`}>{trail.name}</div>)
                     }
