@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import { Coordinate } from './coordinate';
 import { MapState } from './mapState';
 import { mapStateChange } from '../actions/mapStateChange';
+import { selectTrail } from '../actions/selectTrail';
 import { connect } from "react-redux";
 
 export class MapAreaComponent extends React.Component {
@@ -107,6 +108,7 @@ export class MapAreaComponent extends React.Component {
 
     onTrailClick(trail) {
         this.flyToCoordinates(trail.latitude, trail.longitude);
+        this.props.selectTrail(trail);
     }
 
     updateMapState() {
@@ -127,4 +129,4 @@ const mapStateToProps = (state) => ({
     trailSelected: state.trailSelectedReducer
 });
 
-export default connect(mapStateToProps, { mapStateChange })(MapAreaComponent);
+export default connect(mapStateToProps, { mapStateChange, selectTrail })(MapAreaComponent);

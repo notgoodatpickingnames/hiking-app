@@ -6,7 +6,7 @@ import { TrailRepository } from './trailRepository';
 import { TrailsInView } from './trailsInView';
 import calculateDistanceBetweenCoordinates from '../core/calculateDistanceBetweenCoordinates';
 import { trailsInViewStateChange } from '../actions/trailsInViewStateChange';
-import { trailSelected } from '../actions/trailSelected'; 
+import { selectTrail } from '../actions/selectTrail'; 
 
 export class TrailsInViewComponent extends React.Component {
     trailRepository = new TrailRepository();
@@ -65,7 +65,7 @@ export class TrailsInViewComponent extends React.Component {
     }
 
     onTrailClick(trail) {
-        this.props.trailSelected(trail);
+        this.props.selectTrail(trail);
     }
 
     render() {
@@ -93,4 +93,4 @@ const mapStateToProps = (state) => ({
     mapState: state.mapReducer
 });
 
-export default connect(mapStateToProps, { trailsInViewStateChange, trailSelected })(TrailsInViewComponent);
+export default connect(mapStateToProps, { trailsInViewStateChange, selectTrail })(TrailsInViewComponent);
