@@ -8,11 +8,11 @@ import { visitedTrailsStateChange } from '../actions/visitedTrailsStateChange';
 export class VisitedTrailsComponent extends React.Component {
     componentDidUpdate(previousProps) {
         if (previousProps.trailSelected !== this.props.trailSelected) {
-            this.addTrail(this.props.trailSelected);
+            this.visitTrail(this.props.trailSelected);
         }
     }
 
-    addTrail(trail) {
+    visitTrail(trail) {
         if (this.props.visitedTrails.find(t => t.id === trail.id) === undefined) {
             this.props.visitedTrailsStateChange([trail, ...this.props.visitedTrails]); // The 3 dots here are used to new up the array which helps trigger a re-render.
         } else {
