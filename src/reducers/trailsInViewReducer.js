@@ -1,8 +1,6 @@
-import { MapState } from "../mapArea/mapState";
-
-export const trailsInViewReducer = (state = MapState.empty() , action) => {
+export const trailsInViewReducer = (state = [], action) => {
     switch(action.type) {
-        case 'TRAILS_IN_VIEW_STATE_CHANGE': return action.payload;
+        case 'TRAILS_IN_VIEW_STATE_CHANGE': return action.payload ? action.payload : state;
         default: return state;
     }
 }

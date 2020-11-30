@@ -5,11 +5,13 @@ import { connect } from "react-redux";
 import { TrailRepository } from './trailRepository';
 import { TrailsInView } from './trailsInView';
 import calculateDistanceBetweenCoordinates from '../core/calculateDistanceBetweenCoordinates';
+import { trailsInViewStateChange } from '../actions/trailsInViewStateChange';
+import { Coordinate } from '../mapArea/coordinate';
 
 export class TrailsInViewComponent extends React.Component {
     trailRepository = new TrailRepository();
     trails;
-    trailsInView;
+    trailsInView = new TrailsInView([], Coordinate.empty(), 0);
     epicenterOfTrails;
     distanceMapMustMoveFromEpicenterToTriggerTrailRefresh = 100;
 
@@ -38,6 +40,7 @@ export class TrailsInViewComponent extends React.Component {
         const mapState = this.props.mapState;
         const viewRadiusOfMap = mapState.viewRadiusInMiles;
         this.trailsInView = new TrailsInView(this.trails, mapState.center, viewRadiusOfMap);
+        this.props.trailsInViewStateChange(this.trailsInView.trailsInView);
     }
 
     retrieveTrailsThenSetTrailsInView() {
@@ -66,13 +69,16 @@ export class TrailsInViewComponent extends React.Component {
                 <div>
                     distFromOldCenter - {calculateDistanceBetweenCoordinates(this.props.mapState.center.latitude, this.props.mapState.center.longitude, this.epicenterOfTrails?.latitude, this.epicenterOfTrails?.longitude)}
                 </div>
+                <div>
+                    {
+                        this.trailsInView.trailsInView.map(trail => <div key={`trail_in_view_${trail.id}`}>{trail.name}</div>)
+                    }
+                </div>
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => ({
-    mapState: state.mapReducer
-});
+const mapStateToProps = (state) => ({ mapState: state.mapReducer });
 
-export default connect(mapStateToProps, null)(TrailsInViewComponent);
+export default connect(mapStateToProps, { trailsInViewStateChange })(TrailsInViewComponent);

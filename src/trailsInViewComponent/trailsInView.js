@@ -8,11 +8,15 @@ export class TrailsInView {
     }
 
     setTrailInView(trails, mapCenter, distanceFromMapBoundsToCenterOfMap) {
-        this.trailsInView = trails.filter(trail => {
-            const distanceFromTrailToCenterOfMap = calculateDistanceBetweenCoordinates(trail.latitude, trail.longitude, mapCenter.latitude, mapCenter.longitude);
-            const isTrailInView = distanceFromTrailToCenterOfMap <= distanceFromMapBoundsToCenterOfMap;
-            
-            return isTrailInView;
-        });
+        if (trails !== undefined && mapCenter !== undefined && distanceFromMapBoundsToCenterOfMap !== undefined) {
+            this.trailsInView = trails.filter(trail => {
+                const distanceFromTrailToCenterOfMap = calculateDistanceBetweenCoordinates(trail.latitude, trail.longitude, mapCenter.latitude, mapCenter.longitude);
+                const isTrailInView = distanceFromTrailToCenterOfMap <= distanceFromMapBoundsToCenterOfMap;
+                
+                return isTrailInView;
+            });
+        }
+        
+        return [];
     }
 }

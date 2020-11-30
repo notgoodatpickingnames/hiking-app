@@ -9,6 +9,9 @@ import { connect } from "react-redux";
 
 export class MapAreaComponent extends React.Component {
     mapStyle = 'mapbox://styles/mapbox/streets-v11';
+    map;
+
+    existingMarkerElementIds = [];
 
     constructor(props) {
         super(props);
@@ -24,25 +27,28 @@ export class MapAreaComponent extends React.Component {
     }
 
     componentDidUpdate(previousProps) {
+        this.updateTrailMarkers();
     }
 
     initialiseMap() {
-        const map = new mapboxgl.Map({
+        this.map = new mapboxgl.Map({
             container: this.mapContainer,
             style: this.mapStyle,
             center: [this.state.mapCenter.longitude, this.state.mapCenter.latitude],
             zoom: this.state.zoom,
         });
 
-        map.on('load', () => {
-            const mapState = this.buildMapState(map);
+        this.map.on('load', () => {
+            const mapState = this.buildMapState(this.map);
             this.props.mapStateChange(mapState);
         });
 
-        map.on('move', () => {
-            const mapState = this.buildMapState(map);
+        this.map.on('move', () => {
+            const mapState = this.buildMapState(this.map);
             this.props.mapStateChange(mapState);
         });
+
+        
     }
 
     buildMapState(map) {
@@ -54,6 +60,31 @@ export class MapAreaComponent extends React.Component {
         return new MapState(mapCenter, northEastMapBounds,southWestMapBounds);
     }
 
+    updateTrailMarkers() {
+        const trailsInView = this.props.trailsInViewState;
+
+        trailsInView.forEach(trail => this.addTrailMarker(trail));
+    }
+
+    addTrailMarker(trail) {
+        const elementId = `trail_marker_${trail.id}`;
+
+        if (this.existingMarkerElementIds.find(id => id === elementId) === undefined) {
+            console.log('no element was found so adding marker', elementId, this.existingMarkerElementIds, trail)
+            var el = document.createElement('div');
+            el.id = elementId;
+            el.className = 'trail_marker';
+
+            this.existingMarkerElementIds.push(el.id);
+
+            var popup = new mapboxgl.Popup({ offset: 25 }).setText(trail.name);
+            new mapboxgl.Marker(el)
+                .setLngLat([trail.longitude, trail.latitude])
+                .setPopup(popup)
+                .addTo(this.map);
+        }
+    }
+
     render() {
         return (
             <div ref={el => this.mapContainer = el} className="map"/>
@@ -63,6 +94,7 @@ export class MapAreaComponent extends React.Component {
 
 const mapStateToProps = (state) => ({
     mapState: state.mapReducer,
+    trailsInViewState: state.trailsInViewReducer
 });
 
 export default connect(mapStateToProps, { mapStateChange })(MapAreaComponent);

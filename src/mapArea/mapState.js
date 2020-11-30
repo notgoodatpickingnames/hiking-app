@@ -1,5 +1,4 @@
 import calculateDistanceBetweenCoordinates from '../core/calculateDistanceBetweenCoordinates';
-import convertMetersToMiles from '../core/convertMetersToMiles';
 import { Coordinate } from './coordinate';
 
 export class MapState {
