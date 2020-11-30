@@ -6,13 +6,18 @@ import { TrailRepository } from './trailRepository';
 import { TrailsInView } from './trailsInView';
 import calculateDistanceBetweenCoordinates from '../core/calculateDistanceBetweenCoordinates';
 import { trailsInViewStateChange } from '../actions/trailsInViewStateChange';
+import { trailSelected } from '../actions/trailSelected'; 
 
 export class TrailsInViewComponent extends React.Component {
     trailRepository = new TrailRepository();
     trails = [];
-    trailsInView = new TrailsInView([], undefined);
+    trailsInView = []
     epicenterOfTrails;
     distanceMapMustMoveFromEpicenterToTriggerTrailRefresh = 150;
+
+    componentDidMount() {
+        this.setTrailsInView();
+    }
 
     componentDidUpdate(previousProps) {
         if (this.epicenterOfTrails === undefined) {
@@ -22,10 +27,9 @@ export class TrailsInViewComponent extends React.Component {
 
         if (this.isMapCenterTooFarFromEpicenterOfTrails()) {
             this.setTrails();
-        } else {
-            this.setTrailsInView();
         }
 
+        this.setTrailsInView();
     }
 
     setTrails() {
@@ -37,16 +41,16 @@ export class TrailsInViewComponent extends React.Component {
 
     setTrailsInView() {
         const mapState = this.props.mapState;
-        const viewRadiusOfMap = mapState.viewRadiusInMiles;
-        this.trailsInView = new TrailsInView(this.trails, mapState.bounds, viewRadiusOfMap);
-        this.props.trailsInViewStateChange(this.trailsInView.trailsInView);
+        this.trailsInView = new TrailsInView(this.trails, mapState.bounds).trailsInView;
+        this.props.trailsInViewStateChange(this.trailsInView);
     }
 
     retrieveTrailsThenSetTrailsInView() {
-        this.trailRepository.list(this.epicenterOfTrails.latitude, this.epicenterOfTrails.longitude, 100, 500)
+        this.trailRepository.list(this.epicenterOfTrails.latitude, this.epicenterOfTrails.longitude)
         .then(trails => {
             const newTrails = trails.filter(trail => this.trails.find(t => t.id === trail.id) === undefined);
             this.trails = this.trails.concat(newTrails);
+            
             this.setTrailsInView();
         });
     }
@@ -60,16 +64,27 @@ export class TrailsInViewComponent extends React.Component {
         return distanceFromMapCenterToTrailEpicenter >= this.distanceMapMustMoveFromEpicenterToTriggerTrailRefresh;
     }
 
+    onTrailClick(trail) {
+        console.log('trail clicked', trail);
+        // panMap to trail coords (this will also change the trails in view);
+        // send trail to clicked trail dispatch;
+        this.props.trailSelected(trail);
+    }
+
     render() {
         return (
             <div className="card">
-                <div class="header">
-                    Trails In View <br/>
-                    distFromOldCenter - {calculateDistanceBetweenCoordinates(this.props.mapState.center.latitude, this.props.mapState.center.longitude, this.epicenterOfTrails?.latitude, this.epicenterOfTrails?.longitude)}
+                <div className="header">
+                    Trails In View
                 </div>
-                <div class="trails">
+                <div className="trails">
                     {
-                        this.trailsInView.trailsInView?.map(trail => <div key={`trail_in_view_${trail.id}`}>{trail.name}</div>)
+                        this.trailsInView.map(trail => <div
+                                                        key={`trail_in_view_${trail.id}`}
+                                                        className="trail"
+                                                        onClick={() => this.onTrailClick(trail)}>
+                                                            {trail.name}
+                                                        </div>)
                     }
                 </div>
             </div>
@@ -77,6 +92,8 @@ export class TrailsInViewComponent extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({ mapState: state.mapReducer });
+const mapStateToProps = (state) => ({
+    mapState: state.mapReducer
+});
 
-export default connect(mapStateToProps, { trailsInViewStateChange })(TrailsInViewComponent);
+export default connect(mapStateToProps, { trailsInViewStateChange, trailSelected })(TrailsInViewComponent);

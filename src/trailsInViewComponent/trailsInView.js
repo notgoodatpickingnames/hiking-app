@@ -8,8 +8,8 @@ export class TrailsInView {
     setTrailsInView(trails, bounds) {
         if (trails !== undefined && bounds !== undefined) {
             this.trailsInView = trails.filter(trail => bounds.contains([trail.longitude, trail.latitude]));
+        } else {
+            this.trailsInView = [];
         }
-        
-        return [];
     }
 }

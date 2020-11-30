@@ -34,4 +34,8 @@ export class Trail {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    static empty() {
+        return new Trail(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+    }
 };

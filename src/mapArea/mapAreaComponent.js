@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 export class MapAreaComponent extends React.Component {
     mapStyle = 'mapbox://styles/mapbox/streets-v11';
     map;
+    defaultZoom = 15;
+    flyToZoom = 18;
 
     existingMarkerElementIds = [];
 
@@ -18,7 +20,7 @@ export class MapAreaComponent extends React.Component {
 
         this.state = {
             mapCenter: new Coordinate(41.58138769037615, -93.68189502713614), // TODO - replace with users location by default;
-            zoom: 15
+            zoom: this.defaultZoom
         };
     }
 
@@ -28,6 +30,11 @@ export class MapAreaComponent extends React.Component {
 
     componentDidUpdate(previousProps) {
         this.updateTrailMarkers();
+
+        if (previousProps.trailSelected !== this.props.trailSelected) {
+            const trail = this.props.trailSelected;
+            this.flyToCoords(trail.latitude, trail.longitude);
+        }
     }
 
     initialiseMap() {
@@ -39,21 +46,17 @@ export class MapAreaComponent extends React.Component {
         });
 
         this.map.on('load', () => {
-            const mapState = this.buildMapState(this.map);
-            this.props.mapStateChange(mapState);
+            this.updateMapState();
         });
 
         this.map.on('move', () => {
-            const mapState = this.buildMapState(this.map);
-            this.props.mapStateChange(mapState);
-        });
-
-        
+            this.updateMapState();
+        }); 
     }
 
-    buildMapState(map) {
-        const mapCenter = new Coordinate(map.getCenter().lat, map.getCenter().lng);
-        const mapBounds = map.getBounds();
+    buildMapState() {
+        const mapCenter = new Coordinate(this.map.getCenter().lat, this.map.getCenter().lng);
+        const mapBounds = this.map.getBounds();
 
         return new MapState(mapCenter, mapBounds);
     }
@@ -79,7 +82,22 @@ export class MapAreaComponent extends React.Component {
                 .setLngLat([trail.longitude, trail.latitude])
                 .setPopup(popup)
                 .addTo(this.map);
+
+            this.updateMapState();
         }
+    }
+
+    flyToCoords(latitude, longitude) {
+        this.map.flyTo({
+            center: [longitude, latitude],
+            zoom: this.flyToZoom,
+            essential: true
+        });
+    }
+
+    updateMapState() {
+        const mapState = this.buildMapState();
+        this.props.mapStateChange(mapState);
     }
 
     render() {
@@ -91,7 +109,8 @@ export class MapAreaComponent extends React.Component {
 
 const mapStateToProps = (state) => ({
     mapState: state.mapReducer,
-    trailsInViewState: state.trailsInViewReducer
+    trailsInViewState: state.trailsInViewReducer,
+    trailSelected: state.trailSelectedReducer
 });
 
 export default connect(mapStateToProps, { mapStateChange })(MapAreaComponent);

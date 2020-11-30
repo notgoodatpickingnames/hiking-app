@@ -3,13 +3,21 @@
 .card {
     height: 100%;
     padding: 12px;
+    text-align: left;
 }
 
 .header {
-    height: 80px;
+    height: 37px;
+    text-decoration: underline;
 }
 
 .trails {
-    height: calc(100% - 80px);
+    height: calc(100% - 37px);
     overflow: auto;
+    text-overflow: ellipsis;
+}
+
+.trail:hover {
+    background-color: #515a6b;
+    cursor: pointer;
 }

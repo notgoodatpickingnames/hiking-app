@@ -6,7 +6,7 @@ export class TrailRepository {
 
     list(latitude, longitude, maxDistance, maxResults) {
         console.log('getting list of trails', latitude, longitude, maxDistance, maxResults);
-        return fetch(`${this.trailUri}/get-trails?lat=${latitude}&lon=${longitude}&maxDistance=${maxDistance}&maxResults=${maxResults}&sort=distance&key=${environment.hikingProjectApiKey}`)
+        return fetch(`${this.trailUri}/get-trails?lat=${latitude}&lon=${longitude}&maxDistance=200&maxResults=500&sort=distance&key=${environment.hikingProjectApiKey}`)
             .then(response => {
                 return response.json().then(responseAsJSON => {
                     const trails = responseAsJSON.trails;
