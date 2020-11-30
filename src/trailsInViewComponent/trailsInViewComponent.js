@@ -11,7 +11,7 @@ import { Coordinate } from '../mapArea/coordinate';
 export class TrailsInViewComponent extends React.Component {
     trailRepository = new TrailRepository();
     trails;
-    trailsInView = new TrailsInView([], Coordinate.empty(), 0);
+    trailsInView = new TrailsInView([], undefined);
     epicenterOfTrails;
     distanceMapMustMoveFromEpicenterToTriggerTrailRefresh = 100;
 
@@ -39,7 +39,7 @@ export class TrailsInViewComponent extends React.Component {
     setTrailsInView() {
         const mapState = this.props.mapState;
         const viewRadiusOfMap = mapState.viewRadiusInMiles;
-        this.trailsInView = new TrailsInView(this.trails, mapState.center, viewRadiusOfMap);
+        this.trailsInView = new TrailsInView(this.trails, mapState.bounds, viewRadiusOfMap);
         this.props.trailsInViewStateChange(this.trailsInView.trailsInView);
     }
 
@@ -64,14 +64,11 @@ export class TrailsInViewComponent extends React.Component {
         return (
             <div>
                 <div>
-                    hi - {this.props.mapState.viewRadiusInMiles}
-                </div>
-                <div>
                     distFromOldCenter - {calculateDistanceBetweenCoordinates(this.props.mapState.center.latitude, this.props.mapState.center.longitude, this.epicenterOfTrails?.latitude, this.epicenterOfTrails?.longitude)}
                 </div>
                 <div>
                     {
-                        this.trailsInView.trailsInView.map(trail => <div key={`trail_in_view_${trail.id}`}>{trail.name}</div>)
+                        this.trailsInView.trailsInView?.map(trail => <div key={`trail_in_view_${trail.id}`}>{trail.name}</div>)
                     }
                 </div>
             </div>

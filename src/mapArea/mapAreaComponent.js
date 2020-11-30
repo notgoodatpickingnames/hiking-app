@@ -54,10 +54,8 @@ export class MapAreaComponent extends React.Component {
     buildMapState(map) {
         const mapCenter = new Coordinate(map.getCenter().lat, map.getCenter().lng);
         const mapBounds = map.getBounds();
-        const northEastMapBounds = new Coordinate(mapBounds._ne.lat, mapBounds._ne.lng);
-        const southWestMapBounds = new Coordinate(mapBounds._sw.lat, mapBounds._sw.lng);
 
-        return new MapState(mapCenter, northEastMapBounds,southWestMapBounds);
+        return new MapState(mapCenter, mapBounds);
     }
 
     updateTrailMarkers() {
@@ -70,7 +68,6 @@ export class MapAreaComponent extends React.Component {
         const elementId = `trail_marker_${trail.id}`;
 
         if (this.existingMarkerElementIds.find(id => id === elementId) === undefined) {
-            console.log('no element was found so adding marker', elementId, this.existingMarkerElementIds, trail)
             var el = document.createElement('div');
             el.id = elementId;
             el.className = 'trail_marker';
