@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 import { RootReducer } from './reducers';
 import { Provider } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
-import MapAreaComponent from './mapArea/mapAreaComponent';
+import MapAreaComponent from './mapAreaComponent/mapAreaComponent';
 import TrailsInViewComponent from './trailsInViewComponent/trailsInViewComponent';
 import { environment } from './environment';
 

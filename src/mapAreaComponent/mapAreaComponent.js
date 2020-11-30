@@ -1,4 +1,4 @@
-import './mapArea.css';
+import './mapAreaComponent.css';
 
 import React from 'react';
 import mapboxgl from 'mapbox-gl';
@@ -33,7 +33,7 @@ export class MapAreaComponent extends React.Component {
 
         if (previousProps.trailSelected !== this.props.trailSelected) {
             const trail = this.props.trailSelected;
-            this.flyToCoords(trail.latitude, trail.longitude);
+            this.flyToCoordinates(trail.latitude, trail.longitude);
         }
     }
 
@@ -71,28 +71,42 @@ export class MapAreaComponent extends React.Component {
         const elementId = `trail_marker_${trail.id}`;
 
         if (this.existingMarkerElementIds.find(id => id === elementId) === undefined) {
-            var el = document.createElement('div');
-            el.id = elementId;
-            el.className = 'trail_marker';
+            var markerDiv = document.createElement('div');
+            markerDiv.id = elementId;
+            markerDiv.className = 'trail_marker';
 
-            this.existingMarkerElementIds.push(el.id);
+            this.existingMarkerElementIds.push(markerDiv.id);
 
-            var popup = new mapboxgl.Popup({ offset: 25 }).setText(trail.name);
-            new mapboxgl.Marker(el)
+            var popup = new mapboxgl.Popup({
+                    offset: 25,
+                    closeButton: false,
+                    closeOnClick: false
+                })
+                .setText(trail.name);
+
+            const marker = new mapboxgl.Marker(markerDiv)
                 .setLngLat([trail.longitude, trail.latitude])
                 .setPopup(popup)
                 .addTo(this.map);
+
+            markerDiv.addEventListener('mouseenter', () => marker.togglePopup());
+            markerDiv.addEventListener('mouseleave', () => marker.togglePopup());
+            markerDiv.addEventListener('click', () => this.onTrailClick(trail));
 
             this.updateMapState();
         }
     }
 
-    flyToCoords(latitude, longitude) {
+    flyToCoordinates(latitude, longitude) {
         this.map.flyTo({
             center: [longitude, latitude],
             zoom: this.flyToZoom,
             essential: true
         });
+    }
+
+    onTrailClick(trail) {
+        this.flyToCoordinates(trail.latitude, trail.longitude);
     }
 
     updateMapState() {

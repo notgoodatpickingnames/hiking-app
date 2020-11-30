@@ -1,4 +1,4 @@
-import { MapState } from "../mapArea/mapState";
+import { MapState } from "../mapAreaComponent/mapState";
 
 export const mapReducer = (state = MapState.empty() , action) => {
     switch(action.type) {

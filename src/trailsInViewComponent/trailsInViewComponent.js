@@ -65,9 +65,6 @@ export class TrailsInViewComponent extends React.Component {
     }
 
     onTrailClick(trail) {
-        console.log('trail clicked', trail);
-        // panMap to trail coords (this will also change the trails in view);
-        // send trail to clicked trail dispatch;
         this.props.trailSelected(trail);
     }
 

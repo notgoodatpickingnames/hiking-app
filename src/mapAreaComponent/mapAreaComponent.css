@@ -17,10 +17,5 @@
      
 .mapboxgl-popup {
     max-width: 200px;
-    
     color: black;
-}
-
-.mapboxgl-popup-content {
-    padding-top: 24px;
 }
