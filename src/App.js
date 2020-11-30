@@ -6,6 +6,7 @@ import mapboxgl from 'mapbox-gl';
 import MapAreaComponent from './mapAreaComponent/mapAreaComponent';
 import TrailsInViewComponent from './trailsInViewComponent/trailsInViewComponent';
 import VisitedTrailsComponent from './visitedTrailsComponent/visitedTrailsComponent';
+import SelectedTrailComponent from './selectedTrailComponent/selectedTrailComponent';
 import { environment } from './environment';
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
                 
                 <div className="row">
                     <div className="trail-detail-container">
-                        test test
+                        <SelectedTrailComponent />
                     </div>
                 </div>
             </Provider>
