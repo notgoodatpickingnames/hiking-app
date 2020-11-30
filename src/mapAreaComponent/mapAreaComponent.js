@@ -1,12 +1,12 @@
 import './mapAreaComponent.css';
 
 import React from 'react';
+import { connect } from "react-redux";
 import mapboxgl from 'mapbox-gl';
 import { Coordinate } from './coordinate';
 import { MapState } from './mapState';
 import { mapStateChange } from '../actions/mapStateChange';
 import { selectTrail } from '../actions/selectTrail';
-import { connect } from "react-redux";
 
 export class MapAreaComponent extends React.Component {
     mapStyle = 'mapbox://styles/mapbox/streets-v11';

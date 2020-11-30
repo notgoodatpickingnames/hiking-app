@@ -76,12 +76,13 @@ export class TrailsInViewComponent extends React.Component {
                 </div>
                 <div className="trails">
                     {
-                        this.trailsInView.map(trail => <div
-                                                        key={`trail_in_view_${trail.id}`}
-                                                        className="trail"
-                                                        onClick={() => this.onTrailClick(trail)}>
-                                                            {trail.name}
-                                                        </div>)
+                        this.trailsInView.map(trail =>
+                            <div
+                                key={`trail_in_view_${trail.id}`}
+                                className="trail"
+                                onClick={() => this.onTrailClick(trail)}>
+                                    {trail.name}
+                            </div>)
                     }
                 </div>
             </div>

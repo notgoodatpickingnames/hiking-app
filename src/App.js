@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import MapAreaComponent from './mapAreaComponent/mapAreaComponent';
 import TrailsInViewComponent from './trailsInViewComponent/trailsInViewComponent';
+import VisitedTrailsComponent from './visitedTrailsComponent/visitedTrailsComponent';
 import { environment } from './environment';
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
                     </div>
 
                     <div className="recent-trails-container">
-                        hi
+                        <VisitedTrailsComponent />
                     </div>
                 </div>
                 
