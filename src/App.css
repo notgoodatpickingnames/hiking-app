@@ -1,11 +1,25 @@
 .App {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
-  color: white;
   overflow: hidden;
+}
+
+.darkTheme {
+    background-color: #282c34;
+    color: white;
+}
+
+.lightTheme {
+    background-color: whitesmoke;
+    color: black;
+}
+
+.theme-toggle-container {
+    position: absolute;
+    top: 12px;
+    left: 12px;
 }
 
 .row {

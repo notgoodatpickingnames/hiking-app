@@ -7,7 +7,7 @@ import { Coordinate } from './coordinate';
 import { MapState } from './mapState';
 import { mapStateChange } from '../actions/mapStateChange';
 import { selectTrail } from '../actions/selectTrail';
-import { defaultMapCoordinates, defaultZoom, mapStyle, flyToZoom } from './mapDefaults';
+import { defaultMapCoordinates, defaultZoom, mapStyleLightTheme, mapStyleDarkTheme, flyToZoom } from './mapDefaults';
 
 export class MapAreaComponent extends React.Component {
     map;
@@ -38,7 +38,7 @@ export class MapAreaComponent extends React.Component {
     initialiseMap() {
         this.map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: mapStyle,
+            style: mapStyleLightTheme,
             center: [this.state.mapCenter.longitude, this.state.mapCenter.latitude],
             zoom: this.state.zoom,
         });

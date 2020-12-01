@@ -1,41 +1,45 @@
 import './App.css';
-import { createStore } from 'redux';
-import { RootReducer } from './reducers';
-import { Provider } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import MapAreaComponent from './mapAreaComponent/mapAreaComponent';
 import TrailsInViewComponent from './trailsInViewComponent/trailsInViewComponent';
 import VisitedTrailsComponent from './visitedTrailsComponent/visitedTrailsComponent';
 import SelectedTrailComponent from './selectedTrailComponent/selectedTrailComponent';
+import ThemeToggleComponent from './themeToggleComponent/themeToggleComponent';
 import { environment } from './environment';
+import { useSelector } from 'react-redux';
 
 function App() {
     mapboxgl.accessToken = environment.mapBoxSdkAccessToken;
 
-    let store = createStore(RootReducer);
+    const theme = useSelector(state => {
+        console.log('theme changed', state);
+        return state;
+    })
 
     return (
         <div className="App">
-            <Provider store={store}>
-                <div className="map-container">
-                    <MapAreaComponent />
+            <div className="map-container">
+                <MapAreaComponent />
+            </div>
+
+            <div className="flex-box">
+                <div className="trails-in-view-container">
+                    <TrailsInViewComponent />
                 </div>
 
-                <div className="flex-box">
-                    <div className="trails-in-view-container">
-                        <TrailsInViewComponent />
-                    </div>
-
-                    <div className="recent-trails-container">
-                        <VisitedTrailsComponent />
-                    </div>
-
-                    <div className="trail-detail-container">
-                        <SelectedTrailComponent />
-                    </div>
+                <div className="recent-trails-container">
+                    <VisitedTrailsComponent />
                 </div>
+
+                <div className="trail-detail-container">
+                    <SelectedTrailComponent />
+                </div>
+            </div>
+
+            <div className="theme-toggle-container">
+                <ThemeToggleComponent />
+            </div>
                 
-            </Provider>
         </div>
     );
 }
