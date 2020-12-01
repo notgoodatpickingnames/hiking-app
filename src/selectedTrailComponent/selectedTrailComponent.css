@@ -1,4 +1,4 @@
-.row > div {
+.row-div {
     margin-right: 36px;
 }
 
@@ -9,4 +9,8 @@
 .summary {
     margin-top: 12px;
     overflow: auto;
+}
+
+.trail-detail {
+    padding: 12px;
 }

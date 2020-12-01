@@ -2,8 +2,10 @@
 
 .map {
     position: absolute;
-    width: 50%;
-    height: 50%;
+    width: calc(100% - 36px);
+    height: calc(50% - 24px);
+    margin-left: 18px;
+    margin-top: 18px;
 }
 
 .trail_marker {

@@ -32,7 +32,7 @@ export class VisitedTrailsComponent extends React.Component {
 
     render() {
         return (
-            <div className="card">
+            <div className="visited-trails">
                 <div className="header">
                     Visited Trails
                 </div>

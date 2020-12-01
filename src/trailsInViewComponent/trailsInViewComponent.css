@@ -1,21 +1,36 @@
-.card {
+.trails-in-view {
     height: 100%;
     padding: 12px;
     text-align: left;
+    width: 100%;
 }
 
-.header {
+.trails-in-view > .header {
     height: 37px;
     text-decoration: underline;
 }
 
-.trails {
+.trails-in-view > .trails {
     height: calc(100% - 37px);
     overflow: auto;
-    text-overflow: ellipsis;
+    padding-right: 12px;
+    box-sizing: border-box;
 }
 
 .trail:hover {
     background-color: #515a6b;
     cursor: pointer;
+}
+
+@media screen and (max-width: 760px) {
+    .trails-in-view > .header {
+        height: 25px;
+    }
+    
+    .trails-in-view > .trails {
+        height: calc(100% - 25px);
+        overflow: auto;
+        padding-right: 12px;
+        box-sizing: border-box;
+    }
 }

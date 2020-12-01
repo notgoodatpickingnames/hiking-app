@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 export class SelectedTrailComponent extends React.Component {
     render() {
         return (
-            <div>
+            <div className="trail-detail">
                 <div>
                     {this.props.trailSelected.name}
                 </div>
@@ -21,19 +21,19 @@ export class SelectedTrailComponent extends React.Component {
                     </div>
 
                     <div className="row">
-                        <div>
+                        <div className="row-div">
                             {this.props.trailSelected.ascent}' Up
                         </div>
 
-                        <div>
+                        <div className="row-div">
                             {this.props.trailSelected.descent}' Down
                         </div>
 
-                        <div>
+                        <div className="row-div">
                             {this.props.trailSelected.high}' High
                         </div>
 
-                        <div>
+                        <div className="row-div">
                             {this.props.trailSelected.low}' Low
                         </div>
                     </div>

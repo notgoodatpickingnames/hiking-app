@@ -20,25 +20,24 @@ function App() {
     return (
         <div className="App">
             <Provider store={store}>
-                <div className="row">
+                <div className="map-container">
+                    <MapAreaComponent />
+                </div>
+
+                <div className="flex-box">
                     <div className="trails-in-view-container">
                         <TrailsInViewComponent />
-                    </div>
-
-                    <div className="map-container">
-                        <MapAreaComponent />
                     </div>
 
                     <div className="recent-trails-container">
                         <VisitedTrailsComponent />
                     </div>
-                </div>
-                
-                <div className="row">
+
                     <div className="trail-detail-container">
                         <SelectedTrailComponent />
                     </div>
                 </div>
+                
             </Provider>
         </div>
     );

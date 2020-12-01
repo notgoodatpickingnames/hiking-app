@@ -5,6 +5,7 @@
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   color: white;
+  overflow: hidden;
 }
 
 .row {
@@ -13,28 +14,48 @@
 }
 
 .map-container {
-    padding: 12px;
-    height: 50vh;
-    width: 50vw;
+    height: 49vh;
     box-sizing: border-box;
 }
 
 .trails-in-view-container {
     width: 25vw;
-    padding: 12px;
-    margin-right: 24px;
+    height: 48vh;
     box-sizing: border-box;
 }
 
 .recent-trails-container {
     width: 25vw;
-    padding: 12px;
-    margin-left: 24px;
+    height: 48vh;
     box-sizing: border-box;
 }
 
 .trail-detail-container {
-    width: 100%;
-    padding: 12px;
+    width: 49vw;
+    height: 48vh;
     box-sizing: border-box;
+}
+
+.flex-box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 760px) {
+    .trails-in-view-container {
+        width: 50vw;
+        height: 20vh;
+        margin-bottom: 12px;
+    }
+    
+    .recent-trails-container {
+        width: 50vw;
+        height: 20vh;
+        margin-bottom: 12px;
+    }
+    
+    .trail-detail-container {
+        width: 100vw;
+        height: 25vh;
+    }
 }
