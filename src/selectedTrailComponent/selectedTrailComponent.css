@@ -1,0 +1,12 @@
+.row > div {
+    margin-right: 36px;
+}
+
+.data {
+    margin-top: 12px;
+}
+
+.summary {
+    margin-top: 12px;
+    overflow: auto;
+}
