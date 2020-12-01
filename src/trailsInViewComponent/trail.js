@@ -49,6 +49,21 @@ export class Trail {
         !this.longitude;
     }
 
+    static duplicate(trail) {
+        return new Trail(trail.id,
+            trail.name,
+            trail.summary,
+            trail.location,
+            trail.length,
+            trail.ascent,
+            trail.descent,
+            trail.high,
+            trail.low,
+            trail.latitude,
+            trail.longitude
+        );
+    }
+
     static empty() {
         return new Trail(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     }
