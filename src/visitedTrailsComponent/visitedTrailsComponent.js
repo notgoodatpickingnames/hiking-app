@@ -14,7 +14,7 @@ export class VisitedTrailsComponent extends React.Component {
 
     visitTrail(trail) {
         if (this.props.visitedTrails.find(t => t.id === trail.id) === undefined) {
-            this.props.visitedTrailsStateChange([trail, ...this.props.visitedTrails]); // The 3 dots here are used to new up the array which helps trigger a re-render.
+            this.props.visitedTrailsStateChange([trail, ...this.props.visitedTrails]); // This will new up the array which helps trigger a re-render.
         } else {
             this.moveTrailToFronOfList(trail);
         }
@@ -22,7 +22,7 @@ export class VisitedTrailsComponent extends React.Component {
 
     moveTrailToFronOfList(trail) {
         const visitedTrailsWithoutTrailId = this.props.visitedTrails.filter(t => t.id !== trail.id);
-        this.props.visitedTrailsStateChange([trail, ...visitedTrailsWithoutTrailId]); // The 3 dots here are used to new up the array which helps trigger a re-render.
+        this.props.visitedTrailsStateChange([trail, ...visitedTrailsWithoutTrailId]); // This will new up the array which helps trigger a re-render.
     }
 
     onTrailClick(trail) {

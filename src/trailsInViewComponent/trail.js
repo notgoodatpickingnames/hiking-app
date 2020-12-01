@@ -35,6 +35,20 @@ export class Trail {
         this.longitude = longitude;
     }
 
+    isEmpty() {
+        return !this.id &&
+        !this.name &&
+        !this.summary &&
+        !this.location &&
+        !this.length &&
+        !this.ascent &&
+        !this.descent &&
+        !this.high &&
+        !this.low &&
+        !this.latitude &&
+        !this.longitude;
+    }
+
     static empty() {
         return new Trail(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     }

@@ -22,18 +22,24 @@
     width: 25vw;
     height: 48vh;
     box-sizing: border-box;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .recent-trails-container {
     width: 25vw;
     height: 48vh;
     box-sizing: border-box;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .trail-detail-container {
     width: 49vw;
     height: 48vh;
     box-sizing: border-box;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .flex-box {

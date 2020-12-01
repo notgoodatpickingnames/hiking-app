@@ -12,10 +12,7 @@ import { environment } from './environment';
 function App() {
     mapboxgl.accessToken = environment.mapBoxSdkAccessToken;
 
-    let store = createStore(
-        RootReducer,
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // This should be removed before code is submitted.
-    );
+    let store = createStore(RootReducer);
 
     return (
         <div className="App">

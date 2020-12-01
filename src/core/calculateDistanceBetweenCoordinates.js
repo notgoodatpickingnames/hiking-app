@@ -14,7 +14,7 @@ const calculateDistanceBetweenCoordinates = (latitude1, longitude1, latitude2, l
               Math.sin(Δλ/2) * Math.sin(Δλ/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     
-    const d = R * c; // in metres
+    const d = R * c; // distance in metres.
     const distanceInMiles = convertMetersToMiles(d);
     
     return distanceInMiles;

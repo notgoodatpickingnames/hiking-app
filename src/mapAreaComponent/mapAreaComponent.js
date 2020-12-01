@@ -7,21 +7,18 @@ import { Coordinate } from './coordinate';
 import { MapState } from './mapState';
 import { mapStateChange } from '../actions/mapStateChange';
 import { selectTrail } from '../actions/selectTrail';
+import { defaultMapCoordinates, defaultZoom, mapStyle, flyToZoom } from './mapDefaults';
 
 export class MapAreaComponent extends React.Component {
-    mapStyle = 'mapbox://styles/mapbox/streets-v11';
     map;
-    defaultZoom = 15;
-    flyToZoom = 18;
-
     existingMarkerElementIds = [];
 
     constructor(props) {
         super(props);
 
         this.state = {
-            mapCenter: new Coordinate(41.58138769037615, -93.68189502713614), // TODO - replace with users location by default;
-            zoom: this.defaultZoom
+            mapCenter: defaultMapCoordinates,
+            zoom: defaultZoom
         };
     }
 
@@ -41,10 +38,19 @@ export class MapAreaComponent extends React.Component {
     initialiseMap() {
         this.map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: this.mapStyle,
+            style: mapStyle,
             center: [this.state.mapCenter.longitude, this.state.mapCenter.latitude],
             zoom: this.state.zoom,
         });
+
+        this.map.addControl(
+            new mapboxgl.GeolocateControl({
+                positionOptions: {
+                enableHighAccuracy: true
+            },
+                trackUserLocation: true
+            })
+        );
 
         this.map.on('load', () => {
             this.updateMapState();
@@ -101,7 +107,7 @@ export class MapAreaComponent extends React.Component {
     flyToCoordinates(latitude, longitude) {
         this.map.flyTo({
             center: [longitude, latitude],
-            zoom: this.flyToZoom,
+            zoom: flyToZoom,
             essential: true
         });
     }
