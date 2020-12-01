@@ -8,6 +8,8 @@ import { MapState } from './mapState';
 import { mapStateChange } from '../actions/mapStateChange';
 import { selectTrail } from '../actions/selectTrail';
 import { defaultMapCoordinates, defaultZoom, mapStyleLightTheme, mapStyleDarkTheme, flyToZoom } from './mapDefaults';
+import { Theme } from '../themeToggleComponent/themes';
+import { environment } from '../environment';
 
 export class MapAreaComponent extends React.Component {
     map;
@@ -28,14 +30,13 @@ export class MapAreaComponent extends React.Component {
 
     componentDidUpdate(previousProps) {
         this.updateTrailMarkers();
-
-        if (previousProps.trailSelected !== this.props.trailSelected) {
-            const trail = this.props.trailSelected;
-            this.flyToCoordinates(trail.latitude, trail.longitude);
-        }
+        this.checkTrailSelectedState(previousProps);
+        this.checkThemeState(previousProps);
     }
 
     initialiseMap() {
+        mapboxgl.accessToken = environment.mapBoxSdkAccessToken;
+        
         this.map = new mapboxgl.Map({
             container: this.mapContainer,
             style: mapStyleLightTheme,
@@ -104,6 +105,20 @@ export class MapAreaComponent extends React.Component {
         }
     }
 
+    checkTrailSelectedState(previousProps) {
+        if (previousProps.trailSelected !== this.props.trailSelected) {
+            const trail = this.props.trailSelected;
+            this.flyToCoordinates(trail.latitude, trail.longitude);
+        }
+    }
+
+    checkThemeState(previousProps) {
+        if (previousProps.themeSet !== this.props.themeSet) {
+            const themeToSet = this.props.themeSet === Theme.LightMode ? mapStyleLightTheme : mapStyleDarkTheme;
+            this.map.setStyle(themeToSet);
+        }
+    }
+
     flyToCoordinates(latitude, longitude) {
         this.map.flyTo({
             center: [longitude, latitude],
@@ -132,7 +147,8 @@ export class MapAreaComponent extends React.Component {
 const mapStateToProps = (state) => ({
     mapState: state.mapReducer,
     trailsInViewState: state.trailsInViewReducer,
-    trailSelected: state.trailSelectedReducer
+    trailSelected: state.trailSelectedReducer,
+    themeSet: state.themeSetReducer
 });
 
 export default connect(mapStateToProps, { mapStateChange, selectTrail })(MapAreaComponent);

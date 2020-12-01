@@ -26,7 +26,6 @@ export class VisitedTrailsComponent extends React.Component {
     }
 
     onTrailClick(trail) {
-        console.log('on click', trail);
         this.props.selectTrail(trail);
     }
 

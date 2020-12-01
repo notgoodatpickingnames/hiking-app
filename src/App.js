@@ -7,17 +7,17 @@ import SelectedTrailComponent from './selectedTrailComponent/selectedTrailCompon
 import ThemeToggleComponent from './themeToggleComponent/themeToggleComponent';
 import { environment } from './environment';
 import { useSelector } from 'react-redux';
+import { Theme, convertModeToTheme } from './themeToggleComponent/themes';
 
 function App() {
     mapboxgl.accessToken = environment.mapBoxSdkAccessToken;
 
     const theme = useSelector(state => {
-        console.log('theme changed', state);
-        return state;
+        return convertModeToTheme(state.themeSetReducer);
     })
 
     return (
-        <div className="App">
+        <div className={`app ${theme}`}>
             <div className="map-container">
                 <MapAreaComponent />
             </div>
