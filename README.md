@@ -22,4 +22,3 @@ Extra features include <br/>
 - [x] Saving state of app between browser refreshes. <br/>
 - [x] Theme toggle for dark and light modes. <br/>
 - [ ] Make the browser back/forward buttons navigate in-app actions. <br/>
-  
