@@ -2,8 +2,30 @@ import './selectedTrailComponent.css';
 
 import React from 'react';
 import { connect } from "react-redux";
+import { selectTrail } from '../actions/selectTrail';
+import { Trail } from '../trailsInViewComponent/trail';
 
 export class SelectedTrailComponent extends React.Component {
+    componentDidMount() {
+        this.loadSelectedTrailFromStorage();
+    }
+
+    componentDidUpdate(previousProps) {
+        this.storeSelectedTrail();
+    }
+
+    loadSelectedTrailFromStorage() {
+        const selectedTrailInStorage = localStorage.getItem('selectedTrail');
+        const storedTrailAsJSON = JSON.parse(selectedTrailInStorage);
+
+        const trail = storedTrailAsJSON ? Trail.duplicate(storedTrailAsJSON) : undefined;
+        this.props.selectTrail(trail);
+    }
+
+    storeSelectedTrail() {
+        localStorage.setItem('selectedTrail', JSON.stringify(this.props.trailSelected));
+    }
+
     render() {
         if (!this.props.trailSelected.isEmpty()) {
             return (
@@ -51,4 +73,4 @@ const mapStateToProps = (state) => ({
     trailSelected: state.trailSelectedReducer
 });
 
-export default connect(mapStateToProps, null)(SelectedTrailComponent);
+export default connect(mapStateToProps, { selectTrail })(SelectedTrailComponent);

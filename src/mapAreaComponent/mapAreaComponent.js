@@ -128,7 +128,6 @@ export class MapAreaComponent extends React.Component {
     }
 
     onTrailClick(trail) {
-        this.flyToCoordinates(trail.latitude, trail.longitude);
         this.props.selectTrail(trail);
     }
 
