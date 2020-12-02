@@ -8,6 +8,7 @@ import { Theme } from './themes';
 
 export class ThemeToggleComponent extends React.Component {
     selectedTheme;
+    themeStorageName = 'theme';
 
     componentDidMount() {
         this.loadTheme();
@@ -18,14 +19,14 @@ export class ThemeToggleComponent extends React.Component {
     }
 
     loadTheme() {
-        const themeInStorage = localStorage.getItem('theme');
+        const themeInStorage = localStorage.getItem(this.themeStorageName);
         const themeAsJSON = JSON.parse(themeInStorage);
         
         this.props.setTheme(themeAsJSON);
     }
 
     storeTheme() {
-        localStorage.setItem('theme', JSON.stringify(this.selectedTheme));
+        localStorage.setItem(this.themeStorageName, JSON.stringify(this.selectedTheme));
     }
 
     onToggle(toggleState) {

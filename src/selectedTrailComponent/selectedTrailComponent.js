@@ -6,6 +6,8 @@ import { selectTrail } from '../actions/selectTrail';
 import { Trail } from '../trailsInViewComponent/trail';
 
 export class SelectedTrailComponent extends React.Component {
+    selectedTrailStorageName = 'selectedTrail';
+
     componentDidMount() {
         this.loadSelectedTrailFromStorage();
     }
@@ -15,7 +17,7 @@ export class SelectedTrailComponent extends React.Component {
     }
 
     loadSelectedTrailFromStorage() {
-        const selectedTrailInStorage = localStorage.getItem('selectedTrail');
+        const selectedTrailInStorage = localStorage.getItem(this.selectedTrailStorageName);
         const storedTrailAsJSON = JSON.parse(selectedTrailInStorage);
 
         const trail = storedTrailAsJSON ? Trail.duplicate(storedTrailAsJSON) : undefined;
@@ -23,7 +25,7 @@ export class SelectedTrailComponent extends React.Component {
     }
 
     storeSelectedTrail() {
-        localStorage.setItem('selectedTrail', JSON.stringify(this.props.trailSelected));
+        localStorage.setItem(this.selectedTrailStorageName, JSON.stringify(this.props.trailSelected));
     }
 
     render() {
